@@ -12,7 +12,11 @@ router.get("/getRecipe", async (req, res) => {
       }
     }
   );
-  res.send(recipe.data);
+  res.send({ data: recipe.data });
 });
+
+router.get("/search", async (req, res) => {});
+
+router.get("/addRecipe", async (req, res) => {});
 
 module.exports = router;

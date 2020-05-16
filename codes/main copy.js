@@ -17,12 +17,26 @@ var port = process.env.PORT || "3000";
 //#endregion
 //#region global imports
 const users = require("./routes/users");
-// const recipes = require("./routes/recipes");
-const recipes = require("./routes/recipes_answer");
 //#endregion
 
 app.use("/users", users);
-app.use("/recipes", recipes);
+
+router.get("/recipes/getRecipe", async (req, res) => {
+  const recipe = await axios.get(
+    `https://api.spoonacular.com/recipes/${req.query.id}/information`,
+    {
+      params: {
+        includeNutrition: false,
+        apiKey: process.env.spooncular_apiKey
+      }
+    }
+  );
+  res.send({ data: recipe.data });
+});
+
+router.get("/recipes/search", async (req, res) => {});
+
+router.get("/recipes/addRecipe", async (req, res) => {});
 
 app.use(function (err, req, res, next) {
   console.error(err);
