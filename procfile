@@ -1,1 +1,2 @@
 web: node codes/main.js
+web2: node codes/db2.js

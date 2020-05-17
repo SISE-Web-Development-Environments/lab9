@@ -6,7 +6,6 @@ const config = {
   password: process.env.tedious_password,
   server: process.env.tedious_server,
   database: process.env.tedious_database,
-  port: parseInt(process.env.PORT),
   connectionTimeout: 1500000,
   options: {
     encrypt: true,
