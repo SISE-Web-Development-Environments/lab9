@@ -13,7 +13,10 @@ const config = {
 };
 
 const pool = new sql.ConnectionPool(config);
-const poolConnect = pool.connect();
+const poolConnect = pool
+  .connect()
+  .then(() => console.log("connected"))
+  .catch(() => console.log("problem"));
 
 exports.execQuery = async function (query) {
   await poolConnect;
