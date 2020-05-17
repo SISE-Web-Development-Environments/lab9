@@ -5,18 +5,14 @@ const config = {
   user: process.env.tedious_userName,
   password: process.env.tedious_password,
   server: process.env.tedious_server,
-  database: process.env.tedious_database,
-  options: {
-    encrypt: true,
-    enableArithAbort: true
-  }
+  database: process.env.tedious_database
 };
 
 const pool = new sql.ConnectionPool(config);
 const poolConnect = pool
   .connect()
   .then(() => console.log("connected"))
-  .catch(() => console.log("problem"));
+  .catch((error) => console.log(error.message));
 
 exports.execQuery = async function (query) {
   await poolConnect;
