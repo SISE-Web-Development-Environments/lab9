@@ -21,6 +21,8 @@ const profile = require("./routes/profile");
 const recipes = require("./routes/recipes");
 //#endregion
 
+app.get("/", (req, res) => res.send("welcome"));
+
 app.use("/user", user);
 app.use("/profile", profile);
 app.use("/recipes", recipes);
