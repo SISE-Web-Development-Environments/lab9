@@ -9,18 +9,10 @@ const cookies_options = {
 const session_options = {
   cookieName: "session", // the cookie key name
   secret: process.env.COOKIE_SECRET, // the encryption key
-  duration: 20 * 1000, // expired after 20 sec
-  activeDuration: 0, // if expiresIn < activeDuration,
+  duration: 30 * 60 * 1000, // expired after 20 sec
+  activeDuration: 5 * 60 * 1000 // if expiresIn < activeDuration,
   //the session will be extended by activeDuration milliseconds
-  cookie: cookies_options
-  // cookieName: "session",
-  // secret: "eg[isfd-8yF9-7w2315df{}+Ijsli;;to8",
-  // duration: 30 * 60 * 1000,
-  // activeDuration: 5 * 60 * 1000,
-  // httpOnly: true,
-  // secure: true,
-  // ephemeral: true,
-  // cookies_options: cookies_options
+  // cookie: cookies_options
 };
 
 module.exports = { session_options, cookies_options };

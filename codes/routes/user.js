@@ -3,7 +3,6 @@ var router = express.Router();
 const DButils = require("../modules/DButils");
 const bcrypt = require("bcrypt");
 const { RegisterValidationRules, validate } = require("../modules/validator");
-const { session_options, cookies_options } = require("../modules/config");
 
 router.post(
   "/Register",
@@ -64,9 +63,9 @@ router.post("/Login", async (req, res, next) => {
   }
 });
 
-router.get("/logout", function (req, res) {
+router.post("/Logout", function (req, res) {
   req.session.reset(); // reset the session info --> send cookie when  req.session == undefined!!
-  res.send();
+  res.send({ success: true, message: "logout succeeded" });
 });
 
 module.exports = router;

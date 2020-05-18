@@ -3,17 +3,21 @@ require("dotenv").config();
 var express = require("express");
 var path = require("path");
 var logger = require("morgan");
+const session = require("client-sessions");
+const DButils = require("./modules/DButils");
 
 var app = express();
 app.use(logger("dev")); //logger
 app.use(express.json()); // parse application/json
-
-const { session_options } = require("./modules/config");
-// app.use(cookieParser(process.env.COOKIE_SECRET, cookies_options)); //Parse the cookies into the req.cookies
-const session = require("client-sessions");
-
-app.use(session(session_options));
-
+app.use(
+  session({
+    cookieName: "session", // the cookie key name
+    secret: process.env.COOKIE_SECRET, // the encryption key
+    duration: 20 * 1000, // expired after 20 sec
+    activeDuration: 0 // if expiresIn < activeDuration,
+    //the session will be extended by activeDuration milliseconds
+  })
+);
 app.use(express.urlencoded({ extended: false })); // parse application/x-www-form-urlencoded
 app.use(express.static(path.join(__dirname, "public"))); //To serve static files such as images, CSS files, and JavaScript files
 
@@ -29,7 +33,7 @@ app.use(function (req, res, next) {
     DButils.execQuery("SELECT user_id FROM dbo.users")
       .then((users) => {
         if (users.find((x) => x.user_id === req.session.user_id)) {
-          req.user_id = user_id;
+          req.user_id = req.session.user_id;
           // req.session.user_id = user_id; //refresh the session value
           // res.locals.user_id = user_id;
         }
