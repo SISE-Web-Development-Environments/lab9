@@ -13,7 +13,7 @@ app.use(
   session({
     cookieName: "session", // the cookie key name
     secret: process.env.COOKIE_SECRET, // the encryption key
-    duration: 20 * 1000, // expired after 20 sec
+    duration: 20 * 60 * 1000, // expired after 20 sec
     activeDuration: 0 // if expiresIn < activeDuration,
     //the session will be extended by activeDuration milliseconds
   })
@@ -34,8 +34,6 @@ app.use(function (req, res, next) {
       .then((users) => {
         if (users.find((x) => x.user_id === req.session.user_id)) {
           req.user_id = req.session.user_id;
-          // req.session.user_id = user_id; //refresh the session value
-          // res.locals.user_id = user_id;
         }
         next();
       })
