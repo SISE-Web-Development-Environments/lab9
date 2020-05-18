@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node codes/main.js"
+    "start_Task": "node codes/task/main.js",
+    "start_solution": "node codes/solution/main.js",
+    "start": "node codes/solution/main.js"
   },
   "keywords": [],
   "author": "",

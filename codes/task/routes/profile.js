@@ -1,14 +1,6 @@
 var express = require("express");
 var router = express.Router();
-// const DButils = require("../modules/DButils");
-
-router.use(function requireLogin(req, res, next) {
-  if (!req.user_id) {
-    next({ status: 401, message: "unauthorized" });
-  } else {
-    next();
-  }
-});
+const DButils = require("../modules/DButils");
 
 //#region global simple
 // router.use((req, res, next) => {
@@ -66,9 +58,15 @@ router.get("/personalRecipes", function (req, res) {
 // });
 //#endregion
 
-router.get("/addPersonalRecipe", async (req, res) => {
-  //
-  res.send({ originalUrl: req.originalUrl, cookie_valid: req.username && 1 });
+router.post("/addPersonalRecipe", async (req, res, next) => {
+  try {
+    // await DButils.execQuery(
+    //   `INSERT INTO dbo.recipes VALUES (default, '${req.user_id}', '${req.body.recipe_name}')`
+    // );
+    res.send({ sucess: true, cookie_valid: req.username && 1 });
+  } catch (error) {
+    next(error);
+  }
 });
 //#endregion
 

@@ -7,9 +7,9 @@ async function displayUser() {
   }
 }
 
-async function getUser() {
+async function getUser(id) {
   // find user
-  const user = { userId: Id, name: "Eran" };
+  const user = { userId: id, name: "Eran" };
   if (user) return user;
   else throw new Error("user not found");
 }
