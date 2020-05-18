@@ -25,7 +25,7 @@ app.use(
 );
 //#endregion
 
-//#region run app.use with a middleware that always add the request body message parameter equal to "message"
+//#region run app.use with a middleware that always add message parameter equal to "message" to the request body
 app.use((req, res, next) => {
   req.body.message = "message"; // (2) Make changes to the request and the response objects.
   next(); // (4) Call the next middleware function in the stack.
@@ -37,6 +37,11 @@ app.use((req, res, next) => {
   res.send("last resort"); // (3) End the request-response cycle
 });
 //#endregion
+
+app.get("/", (req, res, next) => {
+  res.send("ok");
+  next();
+});
 
 // error middleware
 app.use(function (err, req, res, next) {

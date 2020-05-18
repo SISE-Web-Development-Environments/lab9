@@ -5,16 +5,22 @@ app.use(express.json()); // (?) parse application/json
 app.use(logger("dev")); // (?) logger
 
 //#region run app.use with a middleware that always execute - console.log("welcome to my server")
-//#endregion
-
-//#region run app.use under the path "/numbers" with 2 middlewares that the first exexute - console.log(1), and the second - console.log(2)
+app.use((req, res, next) => {
+  console.log("welcome to my server", req.body);
+  next();
+});
 //#endregion
 
 //#region run app.use with a middleware that always add the request body message parameter equal to "message"
 //#endregion
 
-//#region run app.use with a middleware that respond to the client with "last resort"
+//#region run app.use with a middleware that respond to the client with message "last resort" and req.body
 //#endregion
+
+app.get("/", (req, res, next) => {
+  res.send("ok");
+  next();
+});
 
 // error middleware
 app.use(function (err, req, res, next) {
@@ -22,8 +28,8 @@ app.use(function (err, req, res, next) {
   res.status(500).send({ message: err.message, success: false });
 });
 
-const server = app.listen(3000, () => {
-  console.log("party started at port", 3000);
+const server = app.listen(3001, () => {
+  console.log("party started at port", 3001);
 });
 
 process.on("SIGINT", function () {

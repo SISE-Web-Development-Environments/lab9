@@ -49,9 +49,13 @@ router.get("/personalRecipes", function (req, res) {
 //#endregion
 
 //#region simple
+// function valid_cookie(cookie) {
+//   return true;
+// }
+
 // router.use("/addPersonalRecipe", (req, res, next) => {
 //   const { cookie } = req.body; // but the request was GET so how come we have req.body???
-//   if (cookie && cookie.valid) {
+//   if (cookie && valid_cookie(cookie)) {
 //     req.username = cookie.username;
 //     next();
 //   } else throw { status: 401, message: "unauthorized" };

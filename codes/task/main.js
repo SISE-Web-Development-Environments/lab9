@@ -25,7 +25,7 @@ var port = process.env.PORT || "3000";
 //#endregion
 const user = require("./routes/user");
 const profile = require("./routes/profile");
-const axios = require("axios");
+
 //#region cookie middleware
 //
 //#endregion
@@ -35,6 +35,8 @@ app.get("/", (req, res) => res.send("welcome"));
 app.use("/user", user);
 app.use("/profile", profile);
 
+//#region this is belong to recipes module
+const axios = require("axios");
 const api_domain = "https://api.spoonacular.com/recipes";
 
 app.get("/recipes/Information", async (req, res, next) => {
@@ -46,7 +48,6 @@ app.get("/recipes/Information", async (req, res, next) => {
   }
 });
 
-//#region example1 - make serach endpoint
 app.get("/recipes/search", async (req, res, next) => {
   try {
     const { query, cuisine, diet, intolerances, number } = req.query;
@@ -72,7 +73,6 @@ app.get("/recipes/search", async (req, res, next) => {
     next(error);
   }
 });
-//#endregion
 
 function getRecipeInfo(id) {
   return axios.get(`${api_domain}/${id}/information`, {
@@ -82,6 +82,7 @@ function getRecipeInfo(id) {
     }
   });
 }
+//#endregion
 
 app.use(function (err, req, res, next) {
   console.error(err);
