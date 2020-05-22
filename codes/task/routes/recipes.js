@@ -1,10 +1,8 @@
 var express = require("express");
 var router = express.Router();
+//#region this is belong to recipes module
 const axios = require("axios");
-
 const api_domain = "https://api.spoonacular.com/recipes";
-
-router.get("/", (req, res) => res.send("im here"));
 
 router.get("/Information", async (req, res, next) => {
   try {
@@ -15,7 +13,6 @@ router.get("/Information", async (req, res, next) => {
   }
 });
 
-//#region example1 - make serach endpoint
 router.get("/search", async (req, res, next) => {
   try {
     const { query, cuisine, diet, intolerances, number } = req.query;
@@ -41,7 +38,6 @@ router.get("/search", async (req, res, next) => {
     next(error);
   }
 });
-//#endregion
 
 function getRecipeInfo(id) {
   return axios.get(`${api_domain}/${id}/information`, {
@@ -51,5 +47,6 @@ function getRecipeInfo(id) {
     }
   });
 }
+//#endregion
 
 module.exports = router;

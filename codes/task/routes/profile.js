@@ -1,13 +1,18 @@
 var express = require("express");
 var router = express.Router();
-const DButils = require("../modules/DButils");
+const DButils = require("../../modules/DButils");
+
+router.use((req, res, next) => {
+  if (req.user_id) next();
+  else throw { status: 401, message: "unauthorized" };
+});
 
 //#region global simple
 // router.use((req, res, next) => {
 //   const { cookie } = req.body;
 
 //   if (cookie && cookie.valid) {
-//     DButils.execQuery("SELECT username FROM dbo.users")
+//     DButils.execQuery("SELECT username FROM users")
 //       .then((users) => {
 //         if (users.find((e) => e.username === cookie.username))
 //           req.username = cookie.username;
@@ -31,21 +36,7 @@ router.get("/personalRecipes", function (req, res) {
 //#region example2 - make add Recipe endpoint
 
 //#region complex
-// router.use("/addPersonalRecipe", function (req, res, next) {
-//   if (req.session && req.session.user_id) {
-//     // or findOne Stored Procedure
-//     DButils.execQuery("SELECT user_id FROM dbo.users").then((users) => {
-//       if (users.find((x) => x.user_id === req.session.user_id)) {
-//         req.user_id = user_id;
-//         // req.session.user_id = user_id; //refresh the session value
-//         // res.locals.user_id = user_id;
-//         next();
-//       } else throw { status: 401, message: "unauthorized" };
-//     });
-//   } else {
-//     throw { status: 401, message: "unauthorized" };
-//   }
-// });
+
 //#endregion
 
 //#region simple
@@ -54,7 +45,7 @@ router.get("/personalRecipes", function (req, res) {
 // }
 
 // router.use("/addPersonalRecipe", (req, res, next) => {
-//   const { cookie } = req.body; // but the request was GET so how come we have req.body???
+//   const { cookie } = req.body;
 //   if (cookie && valid_cookie(cookie)) {
 //     req.username = cookie.username;
 //     next();
@@ -64,10 +55,10 @@ router.get("/personalRecipes", function (req, res) {
 
 router.post("/addPersonalRecipe", async (req, res, next) => {
   try {
-    // await DButils.execQuery(
-    //   `INSERT INTO dbo.recipes VALUES (default, '${req.user_id}', '${req.body.recipe_name}')`
-    // );
-    res.send({ sucess: true, cookie_valid: req.username && 1 });
+    await DButils.execQuery(
+      `INSERT INTO recipes VALUES (default, '${req.user_id}', '${req.body.recipe_name}')`
+    );
+    res.send({ sucess: true });
   } catch (error) {
     next(error);
   }

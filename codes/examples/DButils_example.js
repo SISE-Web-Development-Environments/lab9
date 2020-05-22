@@ -1,8 +1,8 @@
-const DButils = require("../DButils");
+const DButils = require("../modules/DButils");
 
-// const query = `INSERT INTO dbo.users (username, password) VALUES ('demossed', 'demossed')`;
-const query = `SELECT * FROM dbo.users`;
-// const query = `DROP TABLE dbo.users`;
+// const query = `INSERT INTO users (username, password) VALUES ('demossed', 'demossed')`;
+const query = `SELECT * FROM users`;
+// const query = `DROP TABLE users`;
 
 //#region promise Version
 DButils.execQuery(query)

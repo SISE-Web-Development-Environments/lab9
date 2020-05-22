@@ -1,6 +1,6 @@
 var express = require("express");
 var router = express.Router();
-const DButils = require("../modules/DButils");
+const DButils = require("../../modules/DButils");
 
 router.use(function requireLogin(req, res, next) {
   if (!req.user_id) {
@@ -15,7 +15,7 @@ router.use(function requireLogin(req, res, next) {
 //   const { cookie } = req.body;
 
 //   if (cookie && cookie.valid) {
-//     DButils.execQuery("SELECT username FROM dbo.users")
+//     DButils.execQuery("SELECT username FROM users")
 //       .then((users) => {
 //         if (users.find((e) => e.username === cookie.username))
 //           req.username = cookie.username;
@@ -42,7 +42,7 @@ router.get("/personalRecipes", function (req, res) {
 // router.use("/addPersonalRecipe", function (req, res, next) {
 //   if (req.session && req.session.user_id) {
 //     // or findOne Stored Procedure
-//     DButils.execQuery("SELECT user_id FROM dbo.users").then((users) => {
+//     DButils.execQuery("SELECT user_id FROM users").then((users) => {
 //       if (users.find((x) => x.user_id === req.session.user_id)) {
 //         req.user_id = user_id;
 //         // req.session.user_id = user_id; //refresh the session value
@@ -69,7 +69,7 @@ router.get("/personalRecipes", function (req, res) {
 router.post("/addPersonalRecipe", async (req, res, next) => {
   try {
     await DButils.execQuery(
-      `INSERT INTO dbo.recipes VALUES (default, '${req.user_id}', '${req.body.recipe_name}')`
+      `INSERT INTO recipes VALUES (default, '${req.user_id}', '${req.body.recipe_name}')`
     );
     res.send({ sucess: true, cookie_valid: req.username && 1 });
   } catch (error) {

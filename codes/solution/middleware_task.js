@@ -33,14 +33,14 @@ app.use((req, res, next) => {
 //#endregion
 
 //#region run app.use with a middleware that respond to the client with "last resort"
-app.use((req, res, next) => {
-  res.send("last resort"); // (3) End the request-response cycle
-});
+// app.use((req, res, next) => {
+//   res.send("last resort"); // (3) End the request-response cycle
+// });
 //#endregion
 
 app.get("/", (req, res, next) => {
-  res.send("ok");
-  next();
+  throw new Error("err message");
+  // next();
 });
 
 // error middleware
@@ -49,8 +49,8 @@ app.use(function (err, req, res, next) {
   res.status(500).send({ message: err.message, success: false });
 });
 
-const server = app.listen(3000, () => {
-  console.log("party started at port", 3000);
+const server = app.listen(3001, () => {
+  console.log("party started at port", 3001);
 });
 
 process.on("SIGINT", function () {

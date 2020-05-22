@@ -4,7 +4,7 @@ var express = require("express");
 var path = require("path");
 var logger = require("morgan");
 const session = require("client-sessions");
-const DButils = require("./modules/DButils");
+const DButils = require("../modules/DButils");
 
 var app = express();
 app.use(logger("dev")); //logger
@@ -30,7 +30,7 @@ const recipes = require("./routes/recipes");
 //#region cookie middleware
 app.use(function (req, res, next) {
   if (req.session && req.session.user_id) {
-    DButils.execQuery("SELECT user_id FROM dbo.users")
+    DButils.execQuery("SELECT user_id FROM users")
       .then((users) => {
         if (users.find((x) => x.user_id === req.session.user_id)) {
           req.user_id = req.session.user_id;
