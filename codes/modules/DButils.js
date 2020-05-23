@@ -1,7 +1,7 @@
 require("dotenv").config();
 const sql = require("mssql");
 
-const config = {
+/*const config = {
   user: process.env.tedious_userName,
   password: process.env.tedious_password,
   server: process.env.tedious_server,
@@ -11,7 +11,18 @@ const config = {
     encrypt: true,
     enableArithAbort: true
   }
-};
+};*/
+const config = {
+  user: 'nirlior123456',
+  password: 'q1234567Q',
+  server: 'reciepe.database.windows.net',
+  database: 'reciepies',
+  connectionTimeout: 1500000,
+  options: {
+    encrypt: true,
+    enableArithAbort: true
+  }
+}
 
 const pool = new sql.ConnectionPool(config);
 const poolConnect = pool
