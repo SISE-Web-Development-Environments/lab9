@@ -37,7 +37,7 @@ app.use(function (req, res, next) {
         }
         next();
       })
-      .catch((error) => next(error));
+      .catch((error) => next());
   } else {
     next();
   }

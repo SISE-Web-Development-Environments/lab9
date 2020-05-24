@@ -14,7 +14,7 @@ app.use((req, res, next) => {
 //#region run app.use with a middleware that always add the request body message parameter equal to "message"
 app.use((req, res, next) => {
   req.body.message = "message";
-  req.body.eran = "message";
+  // req.body[message] = "message";
   next();
 });
 //#endregion
@@ -22,14 +22,18 @@ app.use((req, res, next) => {
 //#region run app.use with a middleware that respond to the client with message "last resort" and req.body
 //#endregion
 
-app.get("/", (req, res, next) => {
-  res.send(req.body);
+app.get("/", async (req, res, next) => {
+  // res.send(req.body);
+  // next();
+  next(new Error("error"));
 });
 
 // error middleware
-app.use(function (err, req, res, next) {
-  console.error(err);
-  res.status(500).send({ message: err.message, success: false });
+app.use((err, req, res, next) => {
+  // console.error(err);
+  res
+    .status(500)
+    .send({ message: err.message, success: false, body: req.body });
 });
 
 const server = app.listen(3001, () => {

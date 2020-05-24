@@ -31,7 +31,19 @@ router.get("/personalRecipes", function (req, res) {
 //#region example2 - make add Recipe endpoint
 
 //#region complex
-
+// router.use("/addPersonalRecipe", function (req, res, next) {
+//   if (req.session && req.session.user_id) {
+//     // or findOne Stored Procedure
+//     DButils.execQuery("SELECT user_id FROM dbo.users").then((users) => {
+//       if (users.find((x) => x.user_id === req.session.user_id)) {
+//         req.user_id = req.session.user_id;
+//         next();
+//       } else throw { status: 401, message: "unauthorized" };
+//     });
+//   } else {
+//     throw { status: 401, message: "unauthorized" };
+//   }
+// });
 //#endregion
 
 //#region simple
@@ -41,6 +53,7 @@ router.get("/personalRecipes", function (req, res) {
 
 // router.use("/addPersonalRecipe", (req, res, next) => {
 //   const { cookie } = req.body;
+
 //   if (cookie && valid_cookie(cookie)) {
 //     req.username = cookie.username;
 //     next();
@@ -50,9 +63,9 @@ router.get("/personalRecipes", function (req, res) {
 
 router.post("/addPersonalRecipe", async (req, res, next) => {
   try {
-    await DButils.execQuery(
-      `INSERT INTO recipes VALUES (default, '${req.user_id}', '${req.body.recipe_name}')`
-    );
+    // await DButils.execQuery(
+    //   `INSERT INTO recipes VALUES (default, '${req.user_id}', '${req.body.recipe_name}')`
+    // );
     res.send({ sucess: true });
   } catch (error) {
     next(error);
