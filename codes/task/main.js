@@ -26,6 +26,15 @@ var port = process.env.PORT || "3000";
 const user = require("./routes/user");
 const profile = require("./routes/profile");
 
+//#region cookie middleware
+
+//#endregion
+
+app.get("/", (req, res) => res.send("welcome"));
+
+app.use("/user", user);
+app.use("/profile", profile);
+
 //#region this is belong to recipes module
 const axios = require("axios");
 const api_domain = "https://api.spoonacular.com/recipes";
@@ -74,33 +83,6 @@ function getRecipeInfo(id) {
   });
 }
 //#endregion
-
-//#region cookie middleware
-app.use(function (req, res, next) {
-  if (req.session && req.session.user_id) {
-    // or findOne Stored Procedure
-    DButils.execQuery("SELECT user_id FROM users")
-      .then((users) => {
-        if (users.find((x) => x.user_id === req.session.user_id)) {
-          req.user_id = req.session.user_id;
-          // req.session.user_id = user_id; //refresh the session value
-          // res.locals.user_id = user_id;
-          next();
-        }
-        next();
-      })
-      .catch((err) => next(err));
-  } else {
-    next();
-  }
-});
-//#endregion
-
-app.get("/", (req, res) => res.send("welcome"));
-
-app.use("/user", user);
-app.use("/profile", profile);
-app.use("/recipes", recipes);
 
 app.use(function (err, req, res, next) {
   console.error(err);

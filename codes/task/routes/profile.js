@@ -2,11 +2,6 @@ var express = require("express");
 var router = express.Router();
 const DButils = require("../../modules/DButils");
 
-router.use((req, res, next) => {
-  if (req.user_id) next();
-  else throw { status: 401, message: "unauthorized" };
-});
-
 //#region global simple
 // router.use((req, res, next) => {
 //   const { cookie } = req.body;
