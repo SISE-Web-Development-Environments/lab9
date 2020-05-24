@@ -31,5 +31,5 @@ jobs:
       with:
         app-name: 'sise-lab9'
         slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_90de88be01334c1f839089178f59eec8 }}
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_92d50a3bb1fe425685108c545615f10d }}
         package: .
